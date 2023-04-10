@@ -37,6 +37,8 @@ class CatGTRawIO(SpikeGLXRawIO, BaseRawIO):  # SpikeGLXRawIO
             5) think hard, with reference to new insights on the time axis, as to whether the gates / triggers
                and segments are the same across SI and CatGT. Understand how their input is passed to KS (raw).
 
+            6) In general, will need to handle .exported. in the name as presumably ppl will work with these files...
+
         NOTES:
 
         1) extract_stream_info
