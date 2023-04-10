@@ -90,7 +90,7 @@ class SpikeGLXRawIO(BaseRawIO):
         stream_names = sorted(list(srates.keys()), key=lambda e: srates[e])[::-1]
 
         nb_segment = np.unique([info['seg_index'] for info in self.signals_info_list]).size
-        breakpoint()
+
         self._memmaps = {}
         self.signals_info_dict = {}
         for info in self.signals_info_list:
@@ -105,8 +105,6 @@ class SpikeGLXRawIO(BaseRawIO):
             # be some file are shorten
             data = data.reshape(-1, info['num_chan'])
             self._memmaps[key] = data
-
-        breakpoint()
 
         # create channel header
         signal_streams = []
@@ -383,7 +381,6 @@ def read_meta_file(meta_file):
 def extract_stream_info(meta_file, meta):
     """Extract info from the meta dict"""
 
-    breakpoint()
     num_chan = int(meta['nSavedChans'])
     fname = Path(meta_file).stem
     run_name, gate_num, trigger_num, device, stream_kind = parse_spikeglx_fname(fname)
