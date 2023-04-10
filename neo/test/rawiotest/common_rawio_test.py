@@ -66,7 +66,6 @@ class BaseTestRawIO:
 
         if HAVE_DATALAD:
             for remote_path in self.entities_to_download:
-                breakpoint()
                 download_dataset(repo=repo_for_test, remote_path=remote_path)
         else:
             raise unittest.SkipTest("Requires datalad download of data from the web")
