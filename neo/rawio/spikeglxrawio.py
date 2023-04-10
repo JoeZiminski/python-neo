@@ -383,6 +383,7 @@ def read_meta_file(meta_file):
 def extract_stream_info(meta_file, meta):
     """Extract info from the meta dict"""
 
+    breakpoint()
     num_chan = int(meta['nSavedChans'])
     fname = Path(meta_file).stem
     run_name, gate_num, trigger_num, device, stream_kind = parse_spikeglx_fname(fname)

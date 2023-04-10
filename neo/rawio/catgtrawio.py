@@ -34,6 +34,9 @@ class CatGTRawIO(SpikeGLXRawIO, BaseRawIO):  # SpikeGLXRawIO
            4) Think how to handle segments. Would we ever want more than 1 segment? Specifically think of
               use cases in the building and the downstream counting uses.
 
+            5) think hard, with reference to new insights on the time axis, as to whether the gates / triggers
+               and segments are the same across SI and CatGT. Understand how their input is passed to KS (raw).
+
         NOTES:
 
         1) extract_stream_info
