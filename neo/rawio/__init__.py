@@ -19,6 +19,7 @@ Classes:
 * :attr:`BiocamRawIO`
 * :attr:`BlackrockRawIO`
 * :attr:`BrainVisionRawIO`
+* :attr: `CatGTRawIO`
 * :attr:`CedRawIO`
 * :attr: `EDFRawIO`
 * :attr:`ElanRawIO`
@@ -69,6 +70,10 @@ Classes:
     .. autoattribute:: extensions
 
 .. autoclass:: neo.rawio.BrainVisionRawIO
+
+    .. autoattribute:: extensions
+
+.. autoclass:: neo.rawio.CatGTRawIO
 
     .. autoattribute:: extensions
 

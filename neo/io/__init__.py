@@ -30,6 +30,7 @@ Classes:
 * :attr:`BrainwareDamIO`
 * :attr:`BrainwareF32IO`
 * :attr:`BrainwareSrcIO`
+* :attr:`CatGTIO`
 * :attr:`CedIO`
 * :attr:`EDFIO`
 * :attr:`ElanIO`
@@ -122,6 +123,10 @@ Classes:
     .. autoattribute:: extensions
 
 .. autoclass:: neo.io.BrainwareSrcIO
+
+    .. autoattribute:: extensions
+
+.. autoclass:: neo.io.CatGTIO
 
     .. autoattribute:: extensions
 
@@ -297,6 +302,7 @@ from neo.io.brainvisionio import BrainVisionIO
 from neo.io.brainwaredamio import BrainwareDamIO
 from neo.io.brainwaref32io import BrainwareF32IO
 from neo.io.brainwaresrcio import BrainwareSrcIO
+from neo.io.catgtio import CatGTIO
 from neo.io.cedio import CedIO
 from neo.io.edfio import EDFIO
 from neo.io.elanio import ElanIO
@@ -349,6 +355,7 @@ iolist = [
     BrainwareDamIO,
     BrainwareF32IO,
     BrainwareSrcIO,
+    CatGTIO,
     CedIO,
     EDFIO,
     ElanIO,

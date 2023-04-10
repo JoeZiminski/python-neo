@@ -90,7 +90,7 @@ class SpikeGLXRawIO(BaseRawIO):
         stream_names = sorted(list(srates.keys()), key=lambda e: srates[e])[::-1]
 
         nb_segment = np.unique([info['seg_index'] for info in self.signals_info_list]).size
-
+        breakpoint()
         self._memmaps = {}
         self.signals_info_dict = {}
         for info in self.signals_info_list:
@@ -106,6 +106,8 @@ class SpikeGLXRawIO(BaseRawIO):
             data = data.reshape(-1, info['num_chan'])
             self._memmaps[key] = data
 
+        breakpoint()
+
         # create channel header
         signal_streams = []
         signal_channels = []
@@ -114,7 +116,6 @@ class SpikeGLXRawIO(BaseRawIO):
             info = self.signals_info_dict[0, stream_name]
 
             stream_id = stream_name
-            stream_index = stream_names.index(info['stream_name'])
             signal_streams.append((stream_name, stream_id))
 
             # add channels to global list
@@ -147,6 +148,13 @@ class SpikeGLXRawIO(BaseRawIO):
                 t_stop = info['sample_length'] / info['sampling_rate']
                 self._t_stops[seg_index] = max(self._t_stops[seg_index], t_stop)
 
+
+        self.fill_header_dict(nb_segment, signal_streams, signal_channels,
+                              spike_channels, event_channels)
+
+    def fill_header_dict(self, nb_segment, signal_streams, signal_channels,
+                         spike_channels, event_channels):
+
         # fille into header dict
         self.header = {}
         self.header['nb_block'] = 1
@@ -159,7 +167,6 @@ class SpikeGLXRawIO(BaseRawIO):
         # insert some annotation at some place
         self._generate_minimal_annotations()
         self._generate_minimal_annotations()
-        block_ann = self.raw_annotations['blocks'][0]
 
         for seg_index in range(nb_segment):
             seg_ann = self.raw_annotations['blocks'][0]['segments'][seg_index]
@@ -281,7 +288,7 @@ def scan_files(dirname):
     return info_list
 
 
-def parse_spikeglx_fname(fname):
+def parse_spikeglx_fname(fname, catgt=False):
     """
     Parse recording identifiers from a SpikeGLX style filename.
 
@@ -321,19 +328,24 @@ def parse_spikeglx_fname(fname):
     stream_kind: str or None
         The data type identifier, "lf" or "ap" or None
     """
-    r = re.findall(r'(\S*)_g(\d*)_t(\d*)\.(\S*).(ap|lf)', fname)
+    if catgt:
+        trig_re = "tcat"
+    else:
+        trig_re = r"t(\d*)"
+
+    r = re.findall(rf'(\S*)_g(\d*)_{trig_re}\.(\S*).(ap|lf)', fname)
     if len(r) == 1:
         # standard case with probe
         run_name, gate_num, trigger_num, device, stream_kind = r[0]
     else:
-        r = re.findall(r'(\S*)_g(\d*)_t(\d*)\.(\S*)', fname)
+        r = re.findall(rf'(\S*)_g(\d*)_{trig_re}\.(\S*)', fname)
         if len(r) == 1:
             # case for nidaq
             run_name, gate_num, trigger_num, device = r[0]
             stream_kind = None
         else:
             # the naming do not correspond lets try something more easy
-            r = re.findall(r'(\S*)\.(\S*).(ap|lf)', fname)
+            r = re.findall(rf'(\S*)\.(\S*).(ap|lf)', fname)
             if len(r) == 1:
                 run_name, device, stream_kind = r[0]
                 gate_num, trigger_num = None, None
